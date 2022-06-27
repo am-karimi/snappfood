@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RestaurantCategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +31,7 @@ Route::middleware([
 
 Route::post('/users/status',[UserController::class,'status'])->name('status');
 Route::resource('/users', UserController::class);
+
+Route::prefix('/category')->name('category.')->group(function () {
+    Route::resource('/restaurant', RestaurantCategoryController::class);
+});
