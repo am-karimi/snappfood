@@ -16,7 +16,7 @@ class UserController extends Controller
     public function index()
     {
         $users=User::paginate(5);
-        return view('/users/index',compact('users'));
+        return view('users.index',compact('users'));
     }
 
     /**
@@ -38,7 +38,7 @@ class UserController extends Controller
      */
     public function edit(user $user)
     {
-        return view('/users/edit',compact('user'));
+        return view('users.edit',compact('user'));
     }
 
     /**
