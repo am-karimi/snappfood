@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +24,9 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('layouts/dashboard');
     })->name('dashboard');
 });
+
+Route::post('/users/status',[UserController::class,'status'])->name('status');
+Route::resource('/users', UserController::class);
