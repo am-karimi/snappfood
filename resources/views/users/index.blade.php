@@ -72,14 +72,23 @@
                     <td class="px-6 py-4 text-center">
                         <a href="{{   route('users.edit',$user)    }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                     </td>
+
                     <td class="px-6 py-4 text-center ">
-                        <a href="{{  route('users.destroy',$user)   }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+                        <form action="{{   route('users.destroy',$user)   }}" method="post">
+                            @csrf
+                            @method('delete')
+                            <button type="submit"
+                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                Delete
+                            </button>
+                        </form>
+
                     </td>
                 </tr>
                 @endforeach
                 </tbody>
             </table>
-
+        {{ $users->links() }}
     </div>
 
 @endsection
