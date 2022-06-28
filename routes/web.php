@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FoodCategoryController;
 use App\Http\Controllers\RestaurantCategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -35,4 +36,5 @@ Route::resource('/users', UserController::class);
 //Route::resource('category/restaurantCategories', RestaurantCategoryController::class);
 
 Route::resource('category/restaurantCategories', RestaurantCategoryController::class);
+Route::resource('category/foodCategories', FoodCategoryController::class);
 
