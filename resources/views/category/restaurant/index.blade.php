@@ -43,6 +43,7 @@
             </thead>
             <tbody>
             @foreach($resCategories as $resCategory)
+
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                         {{   $resCategory->id  }}
@@ -54,20 +55,21 @@
                         {{   $resCategory->slug  }}
                     </td>
                     <td class="px-6 py-4 text-center">
-                        <a href="{{   route('category.restaurant.edit',$resCategory)    }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                        <a href="{{   route('restaurantCategories.edit',$resCategory)    }}"
+                           class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                     </td>
 
-                    <td class="px-6 py-4 text-center ">
-                        <form action="{{   route('category.restaurant.edit',$resCategory)   }}" method="post">
+                    <form action="{{   route('restaurantCategories.destroy',$resCategory)   }}" method="post">
+                        <td class="px-6 py-4 text-center ">
                             @csrf
                             @method('delete')
                             <button type="submit"
                                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                                 Delete
                             </button>
-                        </form>
+                        </td>
+                    </form>
 
-                    </td>
                 </tr>
             @endforeach
             </tbody>
@@ -75,30 +77,44 @@
         {{ $resCategories->links() }}
     </div>
 
+    {{--add category--}}
+    <h1 class="text-blue-600 text-2xl mt-5 font-bold">
+        Add New Restaurant Category:
+    </h1>
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+            <th scope="col" class="px-6 py-3">
+                Name
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Slug
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Add
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <form action="{{    route('restaurantCategories.store')   }}" method="post">
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                @csrf
+                <td class="px-6 py-4">
+                    <input type="text" name="name">
+                </td>
+                <td class="px-6 py-4">
+                    <input type="text" name="slug">
+                </td>
+                <td class="px-6 py-4 text-center ">
+                    <button type="submit"
+                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                        Add
+                    </button>
+                </td>
+            </tr>
+        </form>
+        </tbody>
+    </table>
 @endsection
 
-{{--@section('scripts')--}}
-{{--    <script>--}}
-{{--        $(document).ready(function () {--}}
-{{--            $('.alert').fadeIn().delay(1000).fadeOut();--}}
-{{--        });--}}
-{{--    </script>--}}
-{{--    <script>--}}
-{{--        $(".status").change(function () {--}}
 
-{{--            var status = $(this).data('status');--}}
-{{--            var id = $(this).val();--}}
-{{--            $.ajax({--}}
-{{--                type: "POST",--}}
-{{--                headers: {--}}
-{{--                    'X-CSRF-Token': '{{ csrf_token() }}',--}}
-{{--                },--}}
-{{--                url: "/users/status",--}}
-{{--                data: {--}}
-{{--                    'status': status == 0 ? 1 : 0,--}}
-{{--                    'id': id--}}
-{{--                },--}}
-{{--            });--}}
-{{--        });--}}
-{{--    </script>--}}
-{{--@endsection--}}
