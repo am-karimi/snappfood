@@ -32,6 +32,7 @@ Route::middleware([
 Route::post('/users/status',[UserController::class,'status'])->name('status');
 Route::resource('/users', UserController::class);
 
-Route::prefix('/category')->name('category.')->group(function () {
-    Route::resource('/restaurant', RestaurantCategoryController::class);
-});
+//Route::resource('category/restaurantCategories', RestaurantCategoryController::class);
+
+Route::resource('category/restaurantCategories', RestaurantCategoryController::class);
+
