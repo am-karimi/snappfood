@@ -16,7 +16,7 @@ class RestaurantCategory extends Model
 
     public function foodCategory()
     {
-        $this->hasMany(FoodCategory::class);
+        return $this->hasMany(FoodCategory::class);
     }
 
 }
