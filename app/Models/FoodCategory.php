@@ -8,9 +8,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FoodCategory extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory;
 
     protected $fillable=[
         'name','slug','restaurant_category_id',
     ];
+
+    public function restaurantCategory()
+    {
+        $this->belongsTo(RestaurantCategory::class);
+    }
+
+
 }

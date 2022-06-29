@@ -29,7 +29,7 @@ class RestaurantCategoryController extends Controller
     public function store(StoreRestaurantCategoryRequest $request)
     {
         RestaurantCategory::create($request->all());
-        return redirect()->route('restaurantCategories.index');
+        return redirect()->route('restaurantCategories.index')->with('success','New Restaurant Category added');
     }
 
 
@@ -54,13 +54,15 @@ class RestaurantCategoryController extends Controller
     public function update(UpdateRestaurantCategoryRequest $request, RestaurantCategory $restaurantCategory)
     {
         $restaurantCategory->update($request->all());
-        return redirect()->route('restaurantCategories.index');
+        return redirect()->route('restaurantCategories.index')
+            ->with('success',' Restaurant Category Updated');
     }
 
 
     public function destroy(RestaurantCategory $restaurantCategory)
     {
         $restaurantCategory->delete();
-        return redirect()->route('restaurantCategories.index');
+        return redirect()->route('restaurantCategories.index')
+            ->with('success','Restaurant Category Deleted');
     }
 }
