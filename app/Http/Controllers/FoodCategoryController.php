@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FoodCategory;
 use App\Http\Requests\StoreFoodCategoryRequest;
 use App\Http\Requests\UpdateFoodCategoryRequest;
+use App\Models\RestaurantCategory;
 
 class FoodCategoryController extends Controller
 {
@@ -15,19 +16,9 @@ class FoodCategoryController extends Controller
      */
     public function index()
     {
-
-        $foodCategories=FoodCategory::paginate(5);
-        return view('category.food.index',compact('foodCategories'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $foodCategories=FoodCategory::with('restaurantCategory')->paginate(5);
+        $restaurantCategories=RestaurantCategory::all();
+        return view('category.food.index',compact('foodCategories','restaurantCategories'));
     }
 
     /**
@@ -38,21 +29,11 @@ class FoodCategoryController extends Controller
      */
     public function store(StoreFoodCategoryRequest $request)
     {
-        dd($request->all());
+//        $request->dd();
         FoodCategory::create($request->all());
         return redirect()->back()->with('success','New Food Category Added');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\FoodCategory  $foodCategory
-     * @return \Illuminate\Http\Response
-     */
-    public function show(FoodCategory $foodCategory)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -62,7 +43,8 @@ class FoodCategoryController extends Controller
      */
     public function edit(FoodCategory $foodCategory)
     {
-        //
+        $restaurantCategories=RestaurantCategory::all();
+        return view('category.food.edit',compact('foodCategory','restaurantCategories'));
     }
 
     /**
@@ -74,7 +56,8 @@ class FoodCategoryController extends Controller
      */
     public function update(UpdateFoodCategoryRequest $request, FoodCategory $foodCategory)
     {
-        //
+        $foodCategory->update($request->all());
+        return redirect()->route('foodCategories.index')->with('update','update succesfull');
     }
 
     /**
@@ -85,6 +68,7 @@ class FoodCategoryController extends Controller
      */
     public function destroy(FoodCategory $foodCategory)
     {
-        //
+        $foodCategory->delete();
+        return redirect()->back()->with('delete','delete succesfull');
     }
 }
