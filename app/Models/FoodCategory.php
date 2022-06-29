@@ -16,7 +16,7 @@ class FoodCategory extends Model
 
     public function restaurantCategory()
     {
-        $this->belongsTo(RestaurantCategory::class);
+        return   $this->belongsTo(RestaurantCategory::class);
     }
 
 
