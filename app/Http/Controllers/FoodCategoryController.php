@@ -71,4 +71,5 @@ class FoodCategoryController extends Controller
         $foodCategory->delete();
         return redirect()->back()->with('delete','delete succesfull');
     }
+
 }
