@@ -30,7 +30,8 @@ class FoodCategoryController extends Controller
     public function store(StoreFoodCategoryRequest $request)
     {
 //        $request->dd();
-        FoodCategory::create($request->all());
+        $foods=FoodCategory::create($request->all());
+//        dd($foods);
         return redirect()->back()->with('success','New Food Category Added');
     }
 
