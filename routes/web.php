@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminRestaurantController;
 use App\Http\Controllers\FoodCategoryController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\RestaurantCategoryController;
+use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\SellerRestaurantController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,3 +42,5 @@ Route::resource('/users', UserController::class);
 Route::resource('category/restaurantCategories',RestaurantCategoryController::class);
 Route::resource('category/foodCategories', FoodCategoryController::class);
 Route::resource('foods', FoodController::class);
+//Route::resource('admin/restaurants', AdminRestaurantController::class);
+Route::resource('seller/restaurants', SellerRestaurantController::class);
