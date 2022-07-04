@@ -65,7 +65,7 @@
                     <td class="px-6 py-4">
                         <div class="form-check">
                             <input class="status" type="checkbox" value="{{$user->id}}"
-                                   {{$user->status == 1 ? 'checked' : ''}}
+                                   {{  $user->status == 1 ? 'checked' : ''}}
                                    id="{{$user->id}}" data-id="{{$user->id}}" data-status="{{ $user->status }}">
                         </div>
                     </td>
