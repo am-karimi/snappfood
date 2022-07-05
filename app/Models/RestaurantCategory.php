@@ -14,9 +14,14 @@ class RestaurantCategory extends Model
         'name', 'slug'
     ];
 
-    public function foodCategory()
+    public function foodCategories()
     {
         return $this->hasMany(FoodCategory::class);
+    }
+
+    public function restaurants()
+    {
+        return $this->belongsToMany(Restaurant::class);
     }
 
 }
