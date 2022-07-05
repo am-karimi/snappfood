@@ -75,7 +75,7 @@ class UserController extends Controller
     {
         $user=User::find($request->id);
         $user->update([
-            'status'=> $request->status ? 1 : 0
+            'status'=> $request->status==1 ? 1 : 0
         ]);
     }
 }
