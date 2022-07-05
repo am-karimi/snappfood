@@ -65,4 +65,14 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    public function restaurants()
+    {
+        return $this->hasMany(Restaurant::class);
+    }
+
+    public function addresses()
+    {
+        return $this->morphMany(Address::class,'addressable');
+    }
+
 }
