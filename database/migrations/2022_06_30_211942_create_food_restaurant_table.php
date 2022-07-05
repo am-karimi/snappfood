@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('food_restaurants', function (Blueprint $table) {
+        Schema::create('food_restaurant', function (Blueprint $table) {
 
             //foreign key 1
             $table->foreignId('restaurant_id');
