@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->string('address');
-            $table->string('point');
+            $table->string('point')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
