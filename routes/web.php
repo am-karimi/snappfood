@@ -34,13 +34,14 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::post('/users/status',[UserController::class,'status'])->name('status');
+Route::post('/users/status', [UserController::class, 'status'])->name('status');
 Route::resource('/users', UserController::class);
 
-//Route::resource('category/restaurantCategories', RestaurantCategoryController::class);
 
-Route::resource('category/restaurantCategories',RestaurantCategoryController::class);
+Route::resource('category/restaurantCategories', RestaurantCategoryController::class);
 Route::resource('category/foodCategories', FoodCategoryController::class);
 Route::resource('foods', FoodController::class);
-//Route::resource('admin/restaurants', AdminRestaurantController::class);
-Route::resource('seller/restaurants', SellerRestaurantController::class);
+
+
+Route::as('admin')->resource('admin/restaurants', AdminRestaurantController::class);
+Route::as('seller')->resource('seller/restaurants', SellerRestaurantController::class);
