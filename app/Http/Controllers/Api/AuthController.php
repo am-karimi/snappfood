@@ -30,8 +30,9 @@ class AuthController extends Controller
         ]);
 
         $token=$user->createToken('userToken')->plainTextToken;
-        return ['token' => $token];
-//        return ['token' => $token];
-
+        return [
+            'token' => $token,
+            'message'=>'Register Successfull'
+        ];
     }
 }
