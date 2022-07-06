@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\AddressesController;
 use App\Http\Controllers\Api\AuthController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +19,13 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::post('user/register',[AuthController::class,'register'],);
-Route::post('user/login',[AuthController::class,'login'],);
+Route::post('register',[AuthController::class,'register'],);
+Route::post('login',[AuthController::class,'login'],);
 
-Route::middleware('auth:sanctum')->prefix('user')->group(function(){
-
+Route::middleware('auth:sanctum')->group(function(){
+    Route::get('addresses',[AddressesController::class,'getAddresses']);
+    Route::post('addresses',[AddressesController::class,'addAddress']);
+    Route::get('addresses/{address_id}',[AddressesController::class,'setCurrent']);
+    Route::get('restaurants/{restaurant_id}',[AddressesController::class,'setCurrent']);
 });
+
