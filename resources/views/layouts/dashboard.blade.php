@@ -1,9 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-
     {{--    header menu--}}
-    <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800 ">
+    <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-blue-500 ">
         <div class="container  {{--flex flex-wrap justify-between items-center--}}  justify-content-end">
             <div class="hidden w-full md:block text-right " id="mobile-menu">
 
@@ -14,24 +13,34 @@
                         </li>
                         <li>
                             <a href="#"
-                               class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Services</a>
+                               class="block py-2 pr-4 pl-3 text-black-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-black-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Services</a>
                         </li>
                         <li>
                             <a href="#"
-                               class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Pricing</a>
+                               class="block py-2 pr-4 pl-3 text-black-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-black-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Pricing</a>
                         </li>
                         <li>
                             <a href="#"
-                               class="block py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
+                               class="block py-2 pr-4 pl-3 text-black-700 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-black-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-black md:dark:hover:bg-transparent">Contact</a>
                         </li>
+
                         <li>
                             <form action="{{   route('logout')   }}" method="post">
                                 @csrf
-                                <button type="submit" class="  py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent
-                                    md:text-blue-700 md:p-0 dark:text-white">
+                                <button type="submit"
+                                        class="  py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-black-700 md:p-0 dark:text-black">
                                     Logout
                                 </button>
                             </form>
+                        </li>
+
+                        <li>
+                            <a href="#"
+                               class="block py-2 pr-4 pl-3 text-black-700 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-black-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-black md:dark:hover:bg-transparent justify-end">
+                                @if(Route::has('login'))
+                                    {{Auth::user()->email}}
+                                @endif
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -102,6 +111,17 @@
                         </a>
                     </li>
                     <li class="mb-2 rounded hover:shadow hover:bg-gray-800">
+                        <a href="{{     route('seller.restaurants.index')     }}"
+                           class="inline-block w-full h-full px-3 py-2 font-bold text-white text-1xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 h-6 mr-2 -mt-2"
+                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            Restaurants
+                        </a>
+                    </li>
+                    <li class="mb-2 rounded hover:shadow hover:bg-gray-800">
                         <a href="{{     route('foodCategories.index')     }}"
                            class="inline-block w-full h-full px-3 py-2 font-bold text-white text-1xl">
                             <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 h-6 mr-2 -mt-2"
@@ -124,7 +144,6 @@
                             Restaurant Categories
                         </a>
                     </li>
-
 
 
                 </ul>
