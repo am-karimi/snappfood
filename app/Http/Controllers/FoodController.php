@@ -28,7 +28,8 @@ class FoodController extends Controller
      */
     public function create()
     {
-        //
+        $foodCategories=FoodCategory::all();
+        Return view('foods.create',compact('foodCategories'));
     }
 
     /**
