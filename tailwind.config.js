@@ -15,10 +15,12 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Nunito', ...defaultTheme.fontFamily.sans],
-            },
+                // 'sans': ['Helvetica', 'Arial', 'sans-serif'],
+                'sans': 'Helvetica, Arial, sans-serif',
         },
     },
 
     plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
-};
+}
+}
+;
