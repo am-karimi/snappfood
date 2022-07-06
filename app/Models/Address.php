@@ -8,11 +8,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Address extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
-    protected $fillable=[
-        'address','point','title'
-    ];
+    protected $fillable =
+        [
+            'address',
+            'point',
+            'title',
+            'latitude',
+            'longitude'
+        ];
 
     public function restaurant()
     {
