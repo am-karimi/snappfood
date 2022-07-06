@@ -35,6 +35,8 @@ class AddressesController extends Controller
             [
                 'title'=>$request->title,
                 'address'=>$request->address,
+                'latitude'=>$request->latitude,
+                'longitude'=>$request->longitude,
 //                'point'=>
             ]
         );
