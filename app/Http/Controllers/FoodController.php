@@ -6,6 +6,10 @@ use App\Models\Food;
 use App\Http\Requests\StoreFoodRequest;
 use App\Http\Requests\UpdateFoodRequest;
 use App\Models\FoodCategory;
+use App\Models\Restaurant;
+use App\Models\User;
+use http\Env\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FoodController extends Controller
 {
@@ -28,8 +32,10 @@ class FoodController extends Controller
      */
     public function create()
     {
-        $foodCategories=FoodCategory::all();
-        Return view('foods.create',compact('foodCategories'));
+        $user=Auth::user();
+        $restaurants=Restaurant::with('user')->where('user_id',$user->id)->get();
+        $foodCategories=FoodCategory::with('food')->get();
+        Return view('foods.create',compact('foodCategories','restaurants'));
     }
 
     /**
