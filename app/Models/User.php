@@ -33,6 +33,7 @@ class User extends Authenticatable
         'status',
         'email',
         'password',
+        'address_id'
     ];
 
     /**
@@ -44,7 +45,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'two_factor_recovery_codes',
-        'two_factor_secret',
+        'two_factor_secret'
     ];
 
     /**
@@ -73,6 +74,11 @@ class User extends Authenticatable
     public function addresses()
     {
         return $this->morphMany(Address::class,'addressable');
+    }
+
+    public function currentAddress()
+    {
+        return $this->hasOne(Address::class,'id','address_id');
     }
 
 }
