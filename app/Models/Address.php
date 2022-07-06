@@ -11,7 +11,7 @@ class Address extends Model
     use HasFactory,SoftDeletes;
 
     protected $fillable=[
-        'address','point'
+        'address','point','title'
     ];
 
     public function restaurant()
