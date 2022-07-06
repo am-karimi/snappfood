@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AddressesController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\RestaurantsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +27,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('addresses',[AddressesController::class,'getAddresses']);
     Route::post('addresses',[AddressesController::class,'addAddress']);
     Route::get('addresses/{address_id}',[AddressesController::class,'setCurrent']);
-    Route::get('restaurants/{restaurant_id}',[AddressesController::class,'setCurrent']);
+    Route::get('restaurants/{restaurant_id}',[RestaurantsController::class,'getRestaurantInfo']);
+    Route::get('restaurants',[RestaurantsController::class,'getRestaurants']);
 });
 
