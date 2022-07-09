@@ -25,12 +25,12 @@ return new class extends Migration
                 ->references('id')
                 ->on('users')
                 ->cascadeOnDelete();
-            //foreign key 2
-            $table->foreignId('address_id')->nullable();
-            $table->foreign('address_id')
-                ->references('id')
-                ->on('addresses')
-                ->cascadeOnDelete();
+//            //foreign key 2
+//            $table->foreignId('address_id')->nullable();
+//            $table->foreign('address_id')
+//                ->references('id')
+//                ->on('addresses')
+//                ->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });
