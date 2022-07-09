@@ -25,9 +25,9 @@ class UpdateRestaurantRequest extends FormRequest
     {
         return [
             'name'=>'required|max:40|min:4',
-            'phone_number'=>['required','regex:/^09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}/','unique:restaurants'],
+            'phone_number'=>['required','regex:/^09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}/'],
 //            'bank_id'=>'/^(?:IR)(?=.{24}$)[0-9]*$/',   // validation for شماره شبا
-            'bank_id'=>'required|min:7|max:12',
+            'bank_id'=>'required|min:6|max:12',
         ];
     }
 }
