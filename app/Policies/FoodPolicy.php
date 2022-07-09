@@ -3,8 +3,10 @@
 namespace App\Policies;
 
 use App\Models\Food;
+use App\Models\Restaurant;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class FoodPolicy
 {
@@ -18,7 +20,7 @@ class FoodPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return Auth::id()==$user->id;
     }
 
     /**
@@ -30,7 +32,7 @@ class FoodPolicy
      */
     public function view(User $user, Food $food)
     {
-        //
+        return $food->restaurants->user_id == $user->id;
     }
 
     /**
@@ -41,7 +43,8 @@ class FoodPolicy
      */
     public function create(User $user)
     {
-        //
+        return Auth::id()==$user->id;
+//        return Auth::id();
     }
 
     /**
@@ -53,7 +56,10 @@ class FoodPolicy
      */
     public function update(User $user, Food $food)
     {
-        //
+        foreach ($food->restaurants as $restaurant){
+            return $restaurant->user_id == $user->id;
+        }
+//        return $food->restaurants->user_id == $user->id;
     }
 
     /**
@@ -65,8 +71,10 @@ class FoodPolicy
      */
     public function delete(User $user, Food $food)
     {
-        //
-    }
+        foreach ($food->restaurants as $restaurant){
+            return $restaurant->user_id == $user->id;
+        }
+     }
 
     /**
      * Determine whether the user can restore the model.
@@ -77,7 +85,7 @@ class FoodPolicy
      */
     public function restore(User $user, Food $food)
     {
-        //
+        return $food->restaurants->user_id == $user->id;
     }
 
     /**
