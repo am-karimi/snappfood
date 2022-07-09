@@ -38,7 +38,7 @@
                             <a href="#"
                                class="block py-2 pr-4 pl-3 text-black-700 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-black-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-black md:dark:hover:bg-transparent justify-end">
                                 @if(Route::has('login'))
-                                    {{Auth::user()->email}}
+                                    {{Auth::user()->name}} => {{Auth::user()->getRoleNames()}}
                                 @endif
                             </a>
                         </li>
@@ -86,7 +86,7 @@
                             Home
                         </a>
                     </li>
-
+                    @hasrole('admin|superAdmin')
                     <li class="mb-2 rounded hover:shadow hover:bg-gray-800">
                         <a href="{{     route('users.index')     }}"
                            class="inline-block w-full h-full px-3 py-2 font-bold text-white">
@@ -99,6 +99,8 @@
                             Users
                         </a>
                     </li>
+                    @endhasrole
+                    @hasrole('seller')
                     <li class="mb-2 rounded hover:shadow hover:bg-gray-800">
                         <a href="{{     route('foods.index')     }}"
                            class="inline-block w-full h-full px-3 py-2 font-bold text-white text-1xl">
@@ -110,6 +112,34 @@
                             Foods
                         </a>
                     </li>
+                    @endhasrole
+                    @hasrole('seller')
+                    <li class="mb-2 rounded hover:shadow hover:bg-gray-800">
+                        <a href="{{     route('foods.index')     }}"
+                           class="inline-block w-full h-full px-3 py-2 font-bold text-white text-1xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 h-6 mr-2 -mt-2"
+                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            Foods
+                        </a>
+                    </li>
+                    @endhasrole
+                    @hasrole('admin|superAdmin')
+                    <li class="mb-2 rounded hover:shadow hover:bg-gray-800">
+                        <a href="{{     route('admin.restaurants.index')     }}"
+                           class="inline-block w-full h-full px-3 py-2 font-bold text-white text-1xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 h-6 mr-2 -mt-2"
+                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            Restaurants
+                        </a>
+                    </li>
+                    @endhasrole
+                    @hasrole('seller')
                     <li class="mb-2 rounded hover:shadow hover:bg-gray-800">
                         <a href="{{     route('seller.restaurants.index')     }}"
                            class="inline-block w-full h-full px-3 py-2 font-bold text-white text-1xl">
@@ -121,6 +151,8 @@
                             Restaurants
                         </a>
                     </li>
+                    @endhasrole
+                    @hasrole('admin|superAdmin')
                     <li class="mb-2 rounded hover:shadow hover:bg-gray-800">
                         <a href="{{     route('foodCategories.index')     }}"
                            class="inline-block w-full h-full px-3 py-2 font-bold text-white text-1xl">
@@ -132,7 +164,8 @@
                             Food Categories
                         </a>
                     </li>
-
+                    @endhasrole
+                    @hasrole('admin|superAdmin')
                     <li class="mb-2 rounded hover:shadow hover:bg-gray-800">
                         <a href="{{     route('restaurantCategories.index')    }}"
                            class="inline-block w-full h-full px-3 py-2 font-bold text-white">
@@ -144,6 +177,7 @@
                             Restaurant Categories
                         </a>
                     </li>
+                    @endhasrole
 
 
                 </ul>
