@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\user;
+use App\Policies\UserPolicy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(User::class , 'user');
+    }
+
     /**
      * Display a listing of the resource.
      *
