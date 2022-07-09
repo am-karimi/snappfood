@@ -7,12 +7,18 @@ use App\Http\Requests\StoreFoodRequest;
 use App\Http\Requests\UpdateFoodRequest;
 use App\Models\FoodCategory;
 use App\Models\Restaurant;
-use App\Models\User;
-use http\Env\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FoodController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->authorizeResource(Food::class , 'food');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,9 +26,19 @@ class FoodController extends Controller
      */
     public function index()
     {
-        $foods=Food::with('foodCategory')->paginate(5);
-        $foodCategories=FoodCategory::all();
-        return view('foods.index',compact('foods','foodCategories'));
+        if (Auth::user()->hasRole([1,2])){
+            $foods=Food::paginate(5);
+        }else{
+//            dd(Auth::id());
+            $foods=Food::whereHas('restaurants',function ($query){
+                $query->where('user_id',Auth::id());
+            })->paginate(5);
+        }
+//        $foods = Food::with('foodCategory')->paginate(5);
+        $foodCategories = FoodCategory::all();
+        $restaurants = Restaurant::with('user')->where('user_id', Auth::id())->get();
+
+        return view('foods.index', compact('foods', 'foodCategories', 'restaurants'));
     }
 
     /**
@@ -32,59 +48,94 @@ class FoodController extends Controller
      */
     public function create()
     {
-        $user=Auth::user();
-        $restaurants=Restaurant::with('user')->where('user_id',$user->id)->get();
-        $foodCategories=FoodCategory::with('food')->get();
-        Return view('foods.create',compact('foodCategories','restaurants'));
+        $user = Auth::user();
+        $restaurants = Restaurant::with('user')->where('user_id', $user->id)->get();
+        $foodCategories = FoodCategory::with('food')->get();
+        return view('foods.create', compact('foodCategories', 'restaurants'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreFoodRequest  $request
+     * @param \App\Http\Requests\StoreFoodRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreFoodRequest $request)
     {
-        Food::create($request->all());
-        return redirect()->route('foods.index')->with('success','New Food Added');
+        $food = Food::create($request->all());
+//        foreach ($request->food_category_id as $category_id) {
+//            $food = Food::create(
+//                [
+//                    'name' => $request->name,
+//                    'price' => $request->price,
+//                    'raw_material' => $request->raw_material,
+//                    'food_category_id' => $category_id
+//                ]
+//            );
+//        }
+        $food->restaurants()->sync(
+            [
+                'restaurant_id' => $request->restaurant_category_id,
+            ],
+        );
+        return redirect()->route('foods.index')->with('success', 'New Food Added');
     }
 
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Food  $food
+     * @param \App\Models\Food $food
      * @return \Illuminate\Http\Response
      */
     public function edit(Food $food)
     {
-        $foodCategories=FoodCategory::all();
-        return view('foods.edit',compact('food','foodCategories'));
+        $user = Auth::user();
+//        $restaurants = Restaurant::with('user')->where('user_id', $user->id)->get();
+        $restaurants = Restaurant::where('user_id', $user->id)->get();
+        $foodCategories = FoodCategory::with('food')->get();
+
+        return view('foods.edit', compact('food', 'foodCategories', 'restaurants'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateFoodRequest  $request
-     * @param  \App\Models\Food  $food
+     * @param \App\Http\Requests\UpdateFoodRequest $request
+     * @param \App\Models\Food $food
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateFoodRequest $request, Food $food)
     {
         $food->update($request->all());
-        return redirect()->route('foods.index')->with('success','Update Done');
+        return redirect()->route('foods.index')->with('success', 'Update Done');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Food  $food
+     * @param \App\Models\Food $food
      * @return \Illuminate\Http\Response
      */
     public function destroy(Food $food)
     {
         $food->delete();
-        return redirect()->back()->with('delete','Delete Successfull');
+        return redirect()->back()->with('delete', 'Delete Successfull');
+    }
+
+    public function restaurantFilter(Request $request)
+    {
+        $foods=Food::whereHas('restaurants',function ($query) use ($request){
+            $query->where('restaurant_id',$request->restaurant_category_id);
+        })->paginate(3);
+        $restaurants = Restaurant::with('user')->where('user_id', Auth::id())->get();
+        return view('foods.index', compact('foods','restaurants'));
+    }
+
+    public function categoryFilter(Request $request)
+    {
+        $foods=Food::where('food_category_id',$request->food_category_id)->paginate(3);
+        $foodCategories=FoodCategory::all();
+        return view('foods.index', compact('foods','foodCategories'));
     }
 }
