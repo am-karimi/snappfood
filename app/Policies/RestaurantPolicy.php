@@ -5,9 +5,11 @@ namespace App\Policies;
 use App\Models\Restaurant;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class RestaurantPolicy
 {
+
     use HandlesAuthorization;
 
     /**
@@ -18,7 +20,7 @@ class RestaurantPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->hasRole([1,2,3]);
     }
 
     /**
@@ -30,7 +32,7 @@ class RestaurantPolicy
      */
     public function view(User $user, Restaurant $restaurant)
     {
-        //
+        return Auth::id()==$user->id ;
     }
 
     /**
@@ -41,7 +43,7 @@ class RestaurantPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasRole([3]);
     }
 
     /**
@@ -53,7 +55,7 @@ class RestaurantPolicy
      */
     public function update(User $user, Restaurant $restaurant)
     {
-        //
+        return $restaurant->user_id==$user->id;
     }
 
     /**
@@ -65,7 +67,7 @@ class RestaurantPolicy
      */
     public function delete(User $user, Restaurant $restaurant)
     {
-        //
+        return $restaurant->user_id==$user->id;
     }
 
     /**
