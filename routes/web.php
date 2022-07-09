@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Route::middleware([
     'auth:sanctum',
@@ -32,16 +32,23 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('layouts/dashboard');
     })->name('dashboard');
+
+
+    Route::post('/users/status', [UserController::class, 'status'])->name('status');
+    Route::resource('/users', UserController::class);
+
+
+    Route::resource('category/restaurantCategories', RestaurantCategoryController::class);
+    Route::resource('category/foodCategories', FoodCategoryController::class);
+
+    Route::post('foods/restaurantFilter', [FoodController::class,'restaurantFilter'])->name('foods.restaurantFilter');
+    Route::post('foods/categoryFilter', [FoodController::class,'categoryFilter'])->name('foods.categoryFilter');
+
+
+    Route::as('admin')->resource('admin/foods', AdminFoodController::class);
+    Route::as('seller')->resource('seller/foods', FoodController::class);
+    Route::as('admin')->resource('admin/restaurants', AdminRestaurantController::class);
+    Route::as('seller')->resource('seller/restaurants', SellerRestaurantController::class);
 });
 
-Route::post('/users/status', [UserController::class, 'status'])->name('status');
-Route::resource('/users', UserController::class);
 
-
-Route::resource('category/restaurantCategories', RestaurantCategoryController::class);
-Route::resource('category/foodCategories', FoodCategoryController::class);
-Route::resource('foods', FoodController::class);
-
-
-Route::as('admin')->resource('admin/restaurants', AdminRestaurantController::class);
-Route::as('seller')->resource('seller/restaurants', SellerRestaurantController::class);
