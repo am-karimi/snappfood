@@ -96,7 +96,7 @@
                     <label for="status" class="uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Active Restaurant
                     </label>
-                    <input type="checkbox" id="status" name="status" value="checked"/>
+                    <input type="checkbox" id="status" name="status" />
                 </div>
                 <div class="md:flex md:items-center mx-4">
                     <div class="md:w-1/3">
