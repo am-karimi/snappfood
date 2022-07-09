@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Food;
 use App\Models\RestaurantCategory;
 use App\Http\Requests\StoreRestaurantCategoryRequest;
 use App\Http\Requests\UpdateRestaurantCategoryRequest;
 
 class RestaurantCategoryController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(RestaurantCategory::class , 'restaurantCategory');
+    }
+
     /**
      * Display a listing of the resource.
      *
