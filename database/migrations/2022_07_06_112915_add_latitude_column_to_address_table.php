@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('addresses', function (Blueprint $table) {
-            $table->double('latitude')->after('point');
-            $table->double('longitude')->after('latitude');
+            $table->double('latitude')->after('point')->nullable();
+            $table->double('longitude')->after('latitude')->nullable();
         });
     }
 
