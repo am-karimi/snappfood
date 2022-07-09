@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreRestaurantRequest;
 use App\Http\Requests\UpdateRestaurantRequest;
 use App\Models\Address;
+use App\Models\FoodCategory;
 use App\Models\Restaurant;
 use App\Models\RestaurantCategory;
 use App\Models\User;
@@ -13,6 +14,13 @@ use Illuminate\Support\Facades\Auth;
 
 class SellerRestaurantController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Restaurant::class, 'restaurant');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -20,10 +28,10 @@ class SellerRestaurantController extends Controller
      */
     public function index(User $user)
     {
-        $restaurants=Restaurant::with('restaurantCategories')
-            ->where('user_id',Auth::id())
+        $restaurants = Restaurant::with('restaurantCategories')
+            ->where('user_id', Auth::id())
             ->paginate(1);
-        return view('restaurants.seller.index',compact('restaurants'));
+        return view('restaurants.seller.index', compact('restaurants'));
     }
 
 
@@ -31,6 +39,7 @@ class SellerRestaurantController extends Controller
     {
 
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -38,24 +47,25 @@ class SellerRestaurantController extends Controller
      */
     protected function create()
     {
-        $restaurantCategories=RestaurantCategory::all();
-        return view('restaurants.seller.create',compact('restaurantCategories'));
+        $restaurantCategories = RestaurantCategory::all();
+        return view('restaurants.seller.create', compact('restaurantCategories'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreRestaurantRequest $request)
     {
         //    add user_id to request
-        $request->request->add(['user_id'=>Auth::id()]);
-        $restaurant=Restaurant::create($request->all());
+        $request->request->add(['user_id' => Auth::id()]);
+        $restaurant = Restaurant::create($request->all());
 
         $restaurant->address()->create([        //store address table
-            'address'=>$request->address,
+            'address' => $request->address,
+            'title' => $request->name,
 //            'point'=>'',
         ]);
         $restaurant->restaurantCategories()->sync($request->restaurant_category_id);
@@ -66,44 +76,43 @@ class SellerRestaurantController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Restaurant  $restaurant
+     * @param \App\Models\Restaurant $restaurant
      * @return \Illuminate\Http\Response
      */
     public function edit(Restaurant $restaurant)
     {
         // get old address for restaurant edit
-        $address=Address::where('addressable_id',$restaurant->id)->first();
-        $restaurantCategories=RestaurantCategory::all();
-        return view('restaurants.seller.edit',compact('restaurant',
-            'address','restaurantCategories'));
+        $address = Address::where('addressable_id', $restaurant->id)->first();
+        $restaurantCategories = RestaurantCategory::all();
+        return view('restaurants.seller.edit', compact('restaurant',
+            'address', 'restaurantCategories'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Restaurant  $restaurant
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Restaurant $restaurant
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateRestaurantRequest $request, Restaurant $restaurant)
     {
-        $request->request->add(['user_id'=>Auth::id()]);
-        $restaurant=Restaurant::create($request->all());
-
-        $restaurant->adress()->create([
-            'address'=>$request->address,
-//            'piont'=>''
+        $request->request->add(['user_id' => Auth::id()]);
+        $restaurant->update($request->all());
+        $restaurant->address->update([
+            'address' => $request->address,
+            'title' => $request->name,
         ]);
 
         $restaurant->restaurantCategories()->sync($request->restaurant_category_id);
-        return redirect()->route('seller.restaurants.index')->with('success','edit updated');
+        return redirect()->route('seller.restaurants.index')->with('success', 'edit updated');
 
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Restaurant  $restaurant
+     * @param \App\Models\Restaurant $restaurant
      * @return \Illuminate\Http\Response
      */
     public function destroy(Restaurant $restaurant)
