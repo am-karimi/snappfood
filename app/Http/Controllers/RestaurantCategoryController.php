@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Food;
-use App\Models\RestaurantCategory;
 use App\Http\Requests\StoreRestaurantCategoryRequest;
 use App\Http\Requests\UpdateRestaurantCategoryRequest;
+use App\Models\RestaurantCategory;
 
 class RestaurantCategoryController extends Controller
 {
