@@ -45,8 +45,8 @@ Route::middleware([
     Route::post('foods/categoryFilter', [FoodController::class,'categoryFilter'])->name('foods.categoryFilter');
 
 
-    Route::as('admin')->resource('admin/foods', AdminFoodController::class);
-    Route::as('seller')->resource('seller/foods', FoodController::class);
+//    Route::as('admin')->resource('admin/foods', AdminFoodController::class);
+    Route::resource('foods', FoodController::class);
     Route::as('admin')->resource('admin/restaurants', AdminRestaurantController::class);
     Route::as('seller')->resource('seller/restaurants', SellerRestaurantController::class);
 });
