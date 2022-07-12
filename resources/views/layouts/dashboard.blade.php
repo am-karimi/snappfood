@@ -77,7 +77,7 @@
                         </div>
                     </li>
                     <li class="mb-2 rounded hover:shadow hover:bg-gray-800">
-                        <a href="#" class="inline-block w-full h-full px-3 py-2 font-bold text-white">
+                        <a href="{{route('dashboard')}}" class="inline-block w-full h-full px-3 py-2 font-bold text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 h-6 mr-2 -mt-2"
                                  fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -86,21 +86,21 @@
                             Home
                         </a>
                     </li>
-                    @hasrole('admin|superAdmin')
-                    <li class="mb-2 rounded hover:shadow hover:bg-gray-800">
-                        <a href="{{     route('users.index')     }}"
-                           class="inline-block w-full h-full px-3 py-2 font-bold text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 h-6 mr-2 -mt-2"
-                                 viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd"
-                                      d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"
-                                      clip-rule="evenodd"/>
-                            </svg>
-                            Users
-                        </a>
-                    </li>
-                    @endhasrole
-                    @hasrole('seller')
+                    @if(\Illuminate\Support\Facades\Auth::user()->hasRole('admin|SuperAdmin'))
+                        <li class="mb-2 rounded hover:shadow hover:bg-gray-800">
+                            <a href="{{     route('users.index')     }}"
+                               class="inline-block w-full h-full px-3 py-2 font-bold text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 h-6 mr-2 -mt-2"
+                                     viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                          d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"
+                                          clip-rule="evenodd"/>
+                                </svg>
+                                Users
+                            </a>
+                        </li>
+                    @endif
+                    @hasrole('superAdmin|admin')
                     <li class="mb-2 rounded hover:shadow hover:bg-gray-800">
                         <a href="{{     route('foods.index')     }}"
                            class="inline-block w-full h-full px-3 py-2 font-bold text-white text-1xl">
@@ -109,7 +109,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
-                            Foods
+                            All Foods
                         </a>
                     </li>
                     @endhasrole
@@ -135,7 +135,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
-                            Restaurants
+                            All Restaurants
                         </a>
                     </li>
                     @endhasrole
