@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Food;
 use App\Http\Requests\StoreFoodRequest;
 use App\Http\Requests\UpdateFoodRequest;
+use App\Models\Food;
 use App\Models\FoodCategory;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
@@ -26,17 +26,20 @@ class FoodController extends Controller
      */
     public function index()
     {
+        # where user is admin
         if (Auth::user()->hasRole([1,2])){
             $foods=Food::paginate(5);
-        }else{
-//            dd(Auth::id());
+            $restaurants = Restaurant::all();
+        }
+        # where user is seller
+        else
+        {
             $foods=Food::whereHas('restaurants',function ($query){
                 $query->where('user_id',Auth::id());
             })->paginate(5);
+            $restaurants = Restaurant::with('user')->where('user_id', Auth::id())->get();
         }
-//        $foods = Food::with('foodCategory')->paginate(5);
         $foodCategories = FoodCategory::all();
-        $restaurants = Restaurant::with('user')->where('user_id', Auth::id())->get();
 
         return view('foods.index', compact('foods', 'foodCategories', 'restaurants'));
     }
@@ -50,7 +53,7 @@ class FoodController extends Controller
     {
         $user = Auth::user();
         $restaurants = Restaurant::with('user')->where('user_id', $user->id)->get();
-        $foodCategories = FoodCategory::with('food')->get();
+        $foodCategories = FoodCategory::with('foods')->get();
         return view('foods.create', compact('foodCategories', 'restaurants'));
     }
 
@@ -128,6 +131,7 @@ class FoodController extends Controller
         $foods=Food::whereHas('restaurants',function ($query) use ($request){
             $query->where('restaurant_id',$request->restaurant_category_id);
         })->paginate(3);
+
         $restaurants = Restaurant::with('user')->where('user_id', Auth::id())->get();
         return view('foods.index', compact('foods','restaurants'));
     }
