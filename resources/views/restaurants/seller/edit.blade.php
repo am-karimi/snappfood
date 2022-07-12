@@ -56,7 +56,8 @@
                                for="grid-password">
                             Bank Id
                         </label>
-                        <input type="text" id="bank_id" name="bank_id" value="{{ $restaurant->bank_id }}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"/>
+                        <input type="text" id="bank_id" name="bank_id" value="{{ $restaurant->bank_id }}"
+                               class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"/>
                     </div>
                 </div>
 
@@ -96,7 +97,7 @@
                     <label for="status" class="uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Active Restaurant
                     </label>
-                    <input type="checkbox" id="status" name="status" />
+                    <input type="checkbox" id="status" name="status"/>
                 </div>
                 <div class="md:flex md:items-center mx-4">
                     <div class="md:w-1/3">
@@ -109,7 +110,7 @@
                     <div class="md:w-2/3"></div>
                 </div>
             </div>
-{{--        </form>--}}
+        </form>
 
     </div>
 

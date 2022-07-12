@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('body')
-{{--    @dd($foods)--}}
+    {{--    @dd($foods)--}}
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg flex flex-col">
 
         <div class="col-md-12">
@@ -20,32 +20,37 @@
             @endif
         </div>
 
-        <div class="mb-2">
-            <form action="{{route('foods.create')}}" METHOD="get">
-                <input type="submit" class="w-full bg-indigo-500 rounded h-10" value="Make New Food">
-            </form>
-        </div>
 
-        <div class="col-md-24">
-            <form action="{{route('foods.restaurantFilter')}}" METHOD="post">
-                @csrf
-                <div class="flex-row flex justify-between">
-                    <select id="restaurant_category_id" name="restaurant_category_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option value="">Select your restaurant</option>
-                        @if(isset($restaurants))
-                            @foreach($restaurants as $restaurant)
-                                <option value="{{$restaurant->id}}">{{$restaurant->name}}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                    <div
-                        class="restaurant_category jus bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-1/4 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 col-md-10">
-                        <input type="submit" value="GO" class="w-1/2">
+        @if(\Illuminate\Support\Facades\Auth::user()->hasRole('seller'))
+            <div class="mb-2">
+                <form action="{{route('foods.create')}}" METHOD="get">
+                    <input type="submit" class="w-full bg-indigo-500 rounded h-10" value="Make New Food">
+                </form>
+            </div>
+        @endif
+
+        @if(\Illuminate\Support\Facades\Auth::user()->hasRole('admin|superAdmin'))
+            <div class="col-md-24">
+                <form action="{{route('foods.restaurantFilter')}}" METHOD="post">
+                    @csrf
+                    <div class="flex-row flex justify-between">
+                        <select id="restaurant_category_id" name="restaurant_category_id"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="">Select your restaurant</option>
+                            @if(isset($restaurants))
+                                @foreach($restaurants as $restaurant)
+                                    <option value="{{$restaurant->id}}">{{$restaurant->name}}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                        <div
+                            class="restaurant_category jus bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-1/4 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 col-md-10">
+                            <input type="submit" value="GO" class="w-1/2">
+                        </div>
                     </div>
-                </div>
-            </form>
-        </div>
+                </form>
+            </div>
+        @endif
 
         <form action="{{ route('foods.categoryFilter'  )}}" METHOD="post">
             @csrf
