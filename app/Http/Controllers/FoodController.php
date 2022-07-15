@@ -96,7 +96,7 @@ class FoodController extends Controller
         $user = Auth::user();
 //        $restaurants = Restaurant::with('user')->where('user_id', $user->id)->get();
         $restaurants = Restaurant::where('user_id', $user->id)->get();
-        $foodCategories = FoodCategory::with('food')->get();
+        $foodCategories = FoodCategory::with('foods')->get();
 
         return view('foods.edit', compact('food', 'foodCategories', 'restaurants'));
     }
