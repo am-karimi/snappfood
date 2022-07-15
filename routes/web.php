@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminRestaurantController;
+use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\FoodCategoryController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\RestaurantCategoryController;
@@ -37,11 +38,17 @@ Route::middleware([
     Route::post('/users/status', [UserController::class, 'status'])->name('status');
     Route::resource('/users', UserController::class);
 
+    Route::get('/discounts/chooseRestaurant',[DiscountController::class, 'chooseRestaurant'])
+        ->name('discounts.chooseRestaurant');
+    Route::post('/discounts/create',[DiscountController::class,'create'])
+        ->name('discounts.create');
+    Route::resource('/discounts', DiscountController::class)->except('create')
+        ->except('update','show','edit');
 
     Route::resource('category/restaurantCategories', RestaurantCategoryController::class);
     Route::resource('category/foodCategories', FoodCategoryController::class);
 
-    Route::post('foods/restaurantFilter', [FoodController::class,'restaurantFilter'])->name('foods.restaurantFilter');
+    Route::get('foods/restaurantFilter', [FoodController::class,'restaurantFilter'])->name('foods.restaurantFilter');
     Route::post('foods/categoryFilter', [FoodController::class,'categoryFilter'])->name('foods.categoryFilter');
 
 
