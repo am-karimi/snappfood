@@ -25,11 +25,16 @@ Route::post('register',[AuthController::class,'register'],);
 Route::post('login',[AuthController::class,'login'],);
 
 Route::middleware('auth:sanctum')->group(function(){
+    # Address PART
     Route::get('addresses',[AddressesController::class,'getAddresses']);
     Route::post('addresses',[AddressesController::class,'addAddress']);
     Route::get('addresses/{address_id}',[AddressesController::class,'setCurrent']);
+
+    # Restaurant PART
     Route::get('restaurants/{restaurant_id}',[RestaurantsController::class,'getRestaurantInfo']);
     Route::get('restaurants',[RestaurantsController::class,'getRestaurants']);
+
+    # Food PART
     Route::get('restaurants/{restaurant_id}/foods',[FoodController::class,'getFoods']);
 });
 

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FoodCategoriesResource;
+use App\Models\Food;
 use App\Models\FoodCategory;
+use Illuminate\Http\Request;
 
 class FoodController extends Controller
 {
