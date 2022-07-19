@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('food', function (Blueprint $table) {
-            $table->string('old_price')->after('price')->nullable();
+//            $table->foreignIdFor(\App\Models\CartItem::class)->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('food', function (Blueprint $table) {
-            $table->dropColumn('old_price');
+//            $table->dropColumn('cart_item_id');
         });
     }
 };
