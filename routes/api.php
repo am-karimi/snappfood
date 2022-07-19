@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AddressesController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\Api\RestaurantsController;
 use Illuminate\Support\Facades\Route;
@@ -36,5 +37,12 @@ Route::middleware('auth:sanctum')->group(function(){
 
     # Food PART
     Route::get('restaurants/{restaurant_id}/foods',[FoodController::class,'getFoods']);
+
+    #cards
+    Route::get('carts',[CartController::class,'getCarts']);
+    Route::post('carts/add',[CartController::class,'addCart']);
+    Route::patch('carts/add',[CartController::class,'update']);
+    Route::get('carts/{cart_id}',[CartController::class,'show']);
+
 });
 
