@@ -29,9 +29,9 @@
             </div>
         @endif
 
-        @if(\Illuminate\Support\Facades\Auth::user()->hasRole('admin|superAdmin'))
+{{--        @if(\Illuminate\Support\Facades\Auth::user()->hasRole('admin|superAdmin'))--}}
             <div class="col-md-24">
-                <form action="{{route('foods.restaurantFilter')}}" METHOD="post">
+                <form action="{{    route('foods.restaurantFilter')    }}"   METHOD="post">
                     @csrf
                     <div class="flex-row flex justify-between">
                         <select id="restaurant_category_id" name="restaurant_category_id"
@@ -45,12 +45,12 @@
                         </select>
                         <div
                             class="restaurant_category jus bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-1/4 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 col-md-10">
-                            <input type="submit" value="GO" class="w-1/2">
+                            <input type="submit" value="Filter" class="w-1/2">
                         </div>
                     </div>
                 </form>
             </div>
-        @endif
+{{--        @endif--}}
 
         <form action="{{ route('foods.categoryFilter'  )}}" METHOD="post">
             @csrf
@@ -67,7 +67,7 @@
 
                 <div
                     class="restaurant_category jus bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-1/4 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 col-md-10">
-                    <input type="submit" value="GO" class="w-1/2 text-center">
+                    <input type="submit" value="Filter" class="w-1/2 text-center">
                 </div>
             </div>
         </form>

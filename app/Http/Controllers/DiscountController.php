@@ -62,12 +62,8 @@ class DiscountController extends Controller
         );
         $food = Food::find($request->food_id);
         $food->update(['discount_id' => $discount->id]);
-        #  change price after apply discount
-        $food->update(['old_price' =>$food->price]);
-        $food->update(['price' =>$food->price-(($request->value/100)*$food->price)]);
 
         return redirect()->route('discounts.index')->with('success', 'discount added');
-
     }
 
     /**
@@ -112,8 +108,7 @@ class DiscountController extends Controller
      */
     public function destroy(Discount $discount)
     {
-        $food=Food::where('discount_id',$discount->id)->first();
-        $food->update(['price' =>$food->old_price,'old_price'=>null,'discount_id'=>0]);
+        Food::where('discount_id',$discount->id)->first()->update(['discount_id'=>0]);
         $discount->delete();
         return redirect()->route('discounts.index')->with('message','Discount Delete');
 

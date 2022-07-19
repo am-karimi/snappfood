@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Cassandra\Exception\ReadTimeoutException;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -82,6 +83,11 @@ class User extends Authenticatable
     public function currentAddress()
     {
         return $this->hasOne(Address::class,'id','address_id');
+    }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
     }
 
 }

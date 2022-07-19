@@ -26,4 +26,15 @@ class Food extends Model
     {
         return $this->belongsTo(Discount::class);
     }
+
+    public function cartItem()
+    {
+        return $this->hasMany(CartItem::class);
+    }
+
+    public function restaurant()
+    {
+        return $this->belongsToMany(Restaurant::class)
+            ->withPivot('restaurant_id','food_id')->withTimestamps();
+    }
 }

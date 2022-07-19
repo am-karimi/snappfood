@@ -42,13 +42,13 @@ Route::middleware([
         ->name('discounts.chooseRestaurant');
     Route::post('/discounts/create',[DiscountController::class,'create'])
         ->name('discounts.create');
-    Route::resource('/discounts', DiscountController::class)->except('create')
-        ->except('update','show','edit');
+    Route::resource('/discounts', DiscountController::class)
+        ->except('create','update','show','edit');
 
     Route::resource('category/restaurantCategories', RestaurantCategoryController::class);
     Route::resource('category/foodCategories', FoodCategoryController::class);
 
-    Route::get('foods/restaurantFilter', [FoodController::class,'restaurantFilter'])->name('foods.restaurantFilter');
+    Route::post('foods/restaurantFilter', [FoodController::class,'restaurantFilter'])->name('foods.restaurantFilter');
     Route::post('foods/categoryFilter', [FoodController::class,'categoryFilter'])->name('foods.categoryFilter');
 
 

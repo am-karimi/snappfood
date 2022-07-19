@@ -86,7 +86,7 @@
                             Home
                         </a>
                     </li>
-                    @if(\Illuminate\Support\Facades\Auth::user()->hasRole('admin|SuperAdmin'))
+                    @hasrole('superAdmin|admin')
                         <li class="mb-2 rounded hover:shadow hover:bg-gray-800">
                             <a href="{{     route('users.index')     }}"
                                class="inline-block w-full h-full px-3 py-2 font-bold text-white">
@@ -99,7 +99,8 @@
                                 Users
                             </a>
                         </li>
-                    @endif
+                    @endhasrole
+
                     @hasrole('superAdmin|admin')
                     <li class="mb-2 rounded hover:shadow hover:bg-gray-800">
                         <a href="{{     route('foods.index')     }}"

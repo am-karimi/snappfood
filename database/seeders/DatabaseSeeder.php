@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\RestaurantCategory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,12 +15,11 @@ class DatabaseSeeder extends Seeder
     {
 //         \App\Models\User::factory(10)->create();
             $this->call([
-//                RestaurantCategorySeeder::class,
                 FoodCategorySeeder::class,
+                BasicRole::class,
+                BasicPermission::class,
+                UserSeeder::class
             ]);
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+
     }
 }
