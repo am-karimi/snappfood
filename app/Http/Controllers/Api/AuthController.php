@@ -53,4 +53,14 @@ class AuthController extends Controller
             'message'=>'Register Successfully'
         ];
     }
+
+
+    public function logout(Request $request)
+    {
+        $request->user()->tokens('user_token')->delete();
+
+        return response()->json([
+            'message' => 'LogOut successfully',
+        ]);
+    }
 }
