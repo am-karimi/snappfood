@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AddressesController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\FoodController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\RestaurantsController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,8 @@ Route::post('register',[AuthController::class,'register'],);
 Route::post('login',[AuthController::class,'login'],);
 
 Route::middleware('auth:sanctum')->group(function(){
+    # logout
+    Route::post('logout',[AuthController::class,'logout'],);
     # Address PART
     Route::get('addresses',[AddressesController::class,'getAddresses']);
     Route::post('addresses',[AddressesController::class,'addAddress']);
@@ -43,6 +46,9 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('carts/add',[CartController::class,'addCart']);
     Route::patch('carts/add',[CartController::class,'update']);
     Route::get('carts/{cart_id}',[CartController::class,'show']);
+
+    #Payment
+    Route::post('carts/{cart}/pay',[OrderController::class , 'addCart']);
 
 });
 
