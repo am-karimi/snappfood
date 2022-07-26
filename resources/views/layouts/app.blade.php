@@ -90,6 +90,17 @@
     </script>
 @endif
 
+@if(count($errors)>0)
+    <script>
+        toastr.options =
+            {
+                "closeButton": true,
+                "progressBar": true
+            }
+        toastr.error("{{ $errors->first() }}");
+    </script>
+@endif
+
 @if(Session::has('info'))
     <script>
         toastr.options =

@@ -14,7 +14,8 @@
                 @endforeach
             </div>
         @endif
-        <form class="w-full" method="post" action="{{   route('seller.restaurants.store')   }}">
+        <form class="w-full" method="post" action="{{   route('seller.restaurants.store')   }}"
+              enctype="multipart/form-data">
             @csrf
 
             <div class="flex flex-row  mb-6 justify-items-center mt-2">
@@ -68,7 +69,7 @@
                         </label>
                         <input
                             class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                            aria-describedby="file_input_help" id="file_input" type="file">
+                            aria-describedby="file_input_help" id="image" type="file" name="image">
                         <p class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 "
                            id="file_input_help">SVG, PNG, JPG or
                             GIF (MAX. 800x400px).</p>
@@ -89,6 +90,7 @@
                 </div>
             </div>
 
+
             <div class="flex flex-wrap mx-4 mb-6">
                 <div class="w-full px-3">
                     <label for="status" class="uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
@@ -108,6 +110,7 @@
                 </div>
             </div>
         </form>
+
 
     </div>
 
