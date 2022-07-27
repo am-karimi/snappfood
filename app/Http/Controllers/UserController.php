@@ -78,9 +78,19 @@ class UserController extends Controller
      */
     public function status(Request $request)
     {
-        $user=User::find($request->id);
-        $user->update([
-            'status'=> $request->status==1 ? 1 : 0
-        ]);
+        $user=User::find($request->hidden);
+        if ($user->status==1){
+            $user->status=0;
+        }else{
+            $user->status=1;
+        }
+        $user->save();
+        return back();
+
+        //        # with Ajax
+//        $user=User::find($request->id);
+//        $user->update([
+//            'status'=> $request->status==1 ? 1 : 0
+//        ]);
     }
 }
