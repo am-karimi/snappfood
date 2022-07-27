@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Food;
+use App\Models\Restaurant;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +19,9 @@ class CartFactory extends Factory
      */
     public function definition()
     {
-        return [
-            //
-        ];
+//        return [
+//            'restaurant_id'=>Restaurant::select('id')->get()->random()->id,
+//            'user'=>User::select('id')->get()->random()->id,
+//        ];
     }
 }

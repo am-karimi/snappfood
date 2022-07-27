@@ -25,6 +25,29 @@ class Cart extends Model
     {
         return $this->hasMany(CartItem::class);
     }
+
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
+    }
+
+    public function totalPrice(Cart $cart)
+    {
+        $cartItems = $cart->cartItems->load('food');
+#       Option One
+        $totalPrice = 0;
+        $cartItems->each(function ($cartItem) use (&$totalPrice) {
+            $totalPrice += $cartItem->total_price;
+        });
+#         Option two
+//        $total=0;
+//        foreach ($cartItems as $cartItem){
+//            $total += $cartItem->total_price;
+//        }
+
+        return $totalPrice;
+    }
+
 }
 
 

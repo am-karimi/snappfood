@@ -32,6 +32,7 @@ class CartController extends Controller
         #set price for food after discount is active
         $price = ($food->discount_id != null) ? ($food->price - (($food->price * $food->discount->value) / 100)) : $food->price;
 
+
         $cart = Cart::firstOrCreate(
             [
                 'user_id' => auth()->id(),
@@ -78,6 +79,11 @@ class CartController extends Controller
      */
     public function getCarts()
     {
+        if (!auth()->user()) {
+            return response()->json([
+                'message' => 'please Login'
+            ], 404);
+        }
         $cart = Cart::where('user_id', auth()->id())->first();
 #       eager load
 #       Cart::with('cartItems','restaurant')    ;
@@ -87,6 +93,8 @@ class CartController extends Controller
         return response()->json(['carts' => new RestaurantResource($carts), 200]);
     }
 
+
+
     /**
      * @param Request $request
      * update quantity for cart item
@@ -94,6 +102,11 @@ class CartController extends Controller
      */
     public function update(Request $request)
     {
+        if (!auth()->user()) {
+            return response()->json([
+                'message' => 'Unauthorized'
+            ], 404);
+        }
         $cartItem = CartItem::where('food_id', $request->food_id)->whereHas('cart', function ($query) {
             $query->where('user_id', auth()->id());
         })->first();
@@ -104,12 +117,20 @@ class CartController extends Controller
         return response()->json(['message' => 'Cart Updated'], 200);
     }
 
+
+
+
     /**
      * @param $cart_id
      * show cart filter by cart_id
      */
     public function show($cart_id)
     {
+        if (!auth()->user()) {
+            return response()->json([
+                'message' => 'Unauthorized'
+            ], 404);
+        }
         $cart = Cart::with('cartItems', 'restaurant')->where('id', $cart_id)->first();
 
         return response()->json(
