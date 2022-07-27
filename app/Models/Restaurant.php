@@ -38,4 +38,19 @@ class Restaurant extends Model
     {
         return $this->hasMany(Cart::class);
     }
+
+    public function workingHours()
+    {
+        return $this->hasMany(WorkingHours::class);
+    }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class,'imageable');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
