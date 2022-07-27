@@ -8,7 +8,11 @@ use App\Models\Address;
 use App\Models\Restaurant;
 use App\Models\RestaurantCategory;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class SellerRestaurantController extends Controller
 {
@@ -29,6 +33,7 @@ class SellerRestaurantController extends Controller
         $restaurants = Restaurant::with('restaurantCategories')
             ->where('user_id', Auth::id())
             ->paginate(1);
+
         return view('restaurants.seller.index', compact('restaurants'));
     }
 
@@ -57,17 +62,32 @@ class SellerRestaurantController extends Controller
      */
     public function store(StoreRestaurantRequest $request)
     {
-        //    add user_id to request
-        $request->request->add(['user_id' => Auth::id()]);
-        $restaurant = Restaurant::create($request->all());
+        $file = $request->file('image');
+        $fileName = str_replace(' ', '', $request->name) . '-' . Carbon::now()->timestamp . '.' . $file->getClientOriginalExtension();
 
-        $restaurant->address()->create([        //store address table
-            'address' => $request->address,
-            'title' => $request->name,
+        DB::beginTransaction();
+        try {
+            #type 1 storage
+            $path = $file->storeAs('images/restaurants', $fileName);
+            #type 2 storage
+//        $path = Storage::putFileAs('images', $request->image, $fileName);
+
+            $request->request->add(['user_id' => Auth::id()]);
+            $restaurant = Restaurant::create($request->all());
+
+            $restaurant->address()->create([        //store address table
+                'address' => $request->address,
+                'title' => $request->name,
 //            'point'=>'',
-        ]);
-        $restaurant->restaurantCategories()->sync($request->restaurant_category_id);
-        return redirect()->route('seller.restaurants.index');
+            ]);
+            $restaurant->image()->create(['url' => $path]);
+            $restaurant->restaurantCategories()->sync($request->restaurant_category_id);
+            DB::commit();
+            return redirect()->route('seller.restaurants.index');
+        }catch (\Exception $e){
+            DB::rollBack();
+            return $e;
+        }
     }
 
 
@@ -117,6 +137,26 @@ class SellerRestaurantController extends Controller
     {
         $restaurant->delete();
         return redirect()->route('seller.restaurants.index');
+    }
+
+    public function setLocation($restaurant_id)
+    {
+        return view('restaurants.seller.setLocation', compact('restaurant_id'));
+    }
+
+    public function storeLocation(Request $request)
+    {
+        $restaurant = Restaurant::find($request->restaurant_id);
+//store address table
+        $restaurant->address()->update([
+//            'address' => $request->address,
+            'title' => $restaurant->name,
+            'latitude' => $request->lat,
+            'longitude' => $request->lng,
+//            'point'=> DB::raw("GeomFromText('POINT($request->lat $request->lng)')")
+        ]);
+
+        return redirect()->route('seller.restaurants.index')->with('message', 'Address Point Added');
     }
 
 }

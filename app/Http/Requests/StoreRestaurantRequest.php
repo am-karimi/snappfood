@@ -28,6 +28,7 @@ class StoreRestaurantRequest extends FormRequest
             'phone_number'=>['required','regex:/^09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}/','unique:restaurants'],
 //            'bank_id'=>'/^(?:IR)(?=.{24}$)[0-9]*$/',   // validation for شماره شبا
             'bank_id'=>'required|min:7|max:12',
+            'image'=>'nullable|image'
         ];
     }
 
