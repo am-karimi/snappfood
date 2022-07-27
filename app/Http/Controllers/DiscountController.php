@@ -108,9 +108,13 @@ class DiscountController extends Controller
      */
     public function destroy(Discount $discount)
     {
-        Food::where('discount_id',$discount->id)->first()->update(['discount_id'=>0]);
-        $discount->delete();
-        return redirect()->route('discounts.index')->with('message','Discount Delete');
-
+        if ((Food::where('discount_id',$discount->id))==null){
+            Food::where('discount_id',$discount->id)->first()->update(['discount_id'=>null]);
+            $discount->delete();
+            return redirect()->route('discounts.index')->with('message', 'Discount Delete');
+        }else {
+            $discount->delete();
+            return redirect()->route('discounts.index')->with('message', 'Discount Delete');
+        }
     }
 }

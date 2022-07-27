@@ -17,7 +17,8 @@ class DiscountFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title'=>$this->faker->text(9),
+            'value'=>$this->faker->numberBetween(10,30),
         ];
     }
 }
