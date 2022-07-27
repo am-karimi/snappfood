@@ -111,7 +111,7 @@ class FoodController extends Controller
     public function update(UpdateFoodRequest $request, Food $food)
     {
         $food->update($request->all());
-        return redirect()->route('foods.index')->with('success', 'Update Done');
+        return redirect()->route('foods.index')->with('message', 'Update Done');
     }
 
     /**
@@ -123,7 +123,7 @@ class FoodController extends Controller
     public function destroy(Food $food)
     {
         $food->delete();
-        return redirect()->back()->with('delete', 'Delete Successfull');
+        return redirect()->back()->with('error', 'Delete Successfull');
     }
 
     public function restaurantFilter(Request $request)
