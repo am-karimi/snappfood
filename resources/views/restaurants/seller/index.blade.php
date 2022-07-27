@@ -64,13 +64,13 @@
                     </label>
                     <label for=""
                            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                        {{  $restaurant->address->address  }}
+                        {{  isset($restaurant->address->address) ? $restaurant->address->address : 'No Address'  }}
                     </label>
                 </div>
 
                 <div class="flex flex-wrap mx-4 mb-6">
                     <div class="w-full px-3 rounded">
-                        <img src="https://picsum.photos/300/300?random=2" alt="">
+                        <img src="{{ isset($restaurant->image->url) ? asset('storage/'.$restaurant->image->url) : asset('storage/images/restaurants/download.png') }}" alt="" height="200" width="300">
                     </div>
                 </div>
             </div>
@@ -112,13 +112,25 @@
                         </label>
                     </div>
                 </div>
+{{--                @dd($restaurant->id)--}}
+                <div class="flex flex-row p-4">
+                    <div class="w-1/2 bg-indigo-500 rounded h-10 font-bold text-center mx-4 ">
+                        <a href="{{   route('setLocation',$restaurant->id)    }}">Set Location</a>
+                    </div>
 
+                    <div class="w-1/2 bg-indigo-500 rounded h-10 font-bold text-center mx-4">
+                        <a href="{{  route('workingHours.index',$restaurant)    }}">Working Hours</a>
+                    </div>
+                </div>
                 @endforeach
+
+
                 <div class="w-full p-6">
                     {{       $restaurants->links()     }}
                 </div>
-
             </div>
+
+
         </div>
 
 

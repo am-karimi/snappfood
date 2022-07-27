@@ -4,21 +4,21 @@
     {{--    @dd($foods)--}}
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg flex flex-col">
 
-        <div class="col-md-12">
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @elseif(session('update'))
-                <div class="alert alert-warning">
-                    {{ session('update') }}
-                </div>
-            @elseif(session('delete'))
-                <div class="alert alert-danger">
-                    <p>{{ session('delete') }}</p>
-                </div>
-            @endif
-        </div>
+{{--        <div class="col-md-12">--}}
+{{--            @if (session('success'))--}}
+{{--                <div class="alert alert-success">--}}
+{{--                    {{ session('success') }}--}}
+{{--                </div>--}}
+{{--            @elseif(session('update'))--}}
+{{--                <div class="alert alert-warning">--}}
+{{--                    {{ session('update') }}--}}
+{{--                </div>--}}
+{{--            @elseif(session('delete'))--}}
+{{--                <div class="alert alert-danger">--}}
+{{--                    <p>{{ session('delete') }}</p>--}}
+{{--                </div>--}}
+{{--            @endif--}}
+{{--        </div>--}}
 
 
         @if(\Illuminate\Support\Facades\Auth::user()->hasRole('seller'))
@@ -65,7 +65,9 @@
                             {{   $discount->value  }} %
                         </td>
                         <td class="px-6 py-4">
-                            {{   $discount->foods->first()->name  }}
+                            @foreach($discount->foods as $food)
+                            <p>{{$food->name}}</p><br>
+                            @endforeach
                         </td>
                         <form action="{{   route('discounts.destroy',$discount)   }}" method="post">
                             <td class="px-6 py-4 text-center ">

@@ -88,7 +88,7 @@
             </tbody>
         </table>
     </div>
-    {{--    {{ $foods->links() }}--}}
+        {{ $restaurants->links() }}
 
 
 @endsection
