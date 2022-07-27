@@ -15,10 +15,11 @@ class BasicRole extends Seeder
      */
     public function run()
     {
-        $admin=Role::create(['name'=>'admin']);
         $superAdmin=Role::create(['name'=>'superAdmin']);
+        $admin=Role::create(['name'=>'admin']);
         $seller=Role::create(['name'=>'seller']);
+        $seller=Role::create(['name'=>'user']);
 
-        $superAdmin->givePermissionTo('add discount');
+//        $superAdmin->givePermissionTo('add discount');
     }
 }
