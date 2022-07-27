@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('food', function (Blueprint $table) {
-//            $table->foreignIdFor(\App\Models\CartItem::class)->nullable();
+        Schema::create('images', function (Blueprint $table) {
+            $table->id();
+            $table->string('url');
+            $table->morphs('imageable');
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('food', function (Blueprint $table) {
-//            $table->dropColumn('cart_item_id');
-        });
+        Schema::dropIfExists('images');
     }
 };
