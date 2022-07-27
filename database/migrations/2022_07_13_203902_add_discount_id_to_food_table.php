@@ -14,7 +14,8 @@ return new class extends Migration {
     public function up()
     {
         Schema::table('food', function (Blueprint $table) {
-            $table->foreignIdFor(Discount::class)->after('food_category_id');
+            $table->foreignIdFor(Discount::class)
+                ->after('food_category_id')->nullable();
 //            $table->foreign('discount_id')
 //                ->references('id')->on('discounts')->onDelete('cascade');
 //

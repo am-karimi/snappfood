@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Restaurant;
-use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,13 +14,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('carts', function (Blueprint $table) {
+        Schema::create('working_hours', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Restaurant::class);
-            $table->foreignIdFor(User::class);
-            $table->string('total_price');
-            $table->string('shipping_cost')->nullable();
-            $table->boolean('is_pay')->default(false);
+            $table->foreignIdFor(Restaurant::class)->constrained();
+            $table->string('day');
+            $table->time('open_time');
+            $table->time('close_time');
             $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('carts');
+        Schema::dropIfExists('working_hours');
     }
 };
