@@ -90,4 +90,18 @@ class User extends Authenticatable
         return $this->hasMany(Cart::class);
     }
 
+    public function payment()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class,'imageable');
+    }
+
+    public function order()
+    {
+        return $this->hasOne(Order::class);
+    }
 }
